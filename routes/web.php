@@ -5,18 +5,26 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::redirect('/','/auth/sign-in');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::prefix('auth')->name('auth.')->group(function () {
+    Route::get('/sign-in', function () {
+        return Inertia::render('Auth/Login');
+    })->name('sign-in');
+    Route::post('/sign-in', function () {
+        return Inertia::render('Auth/Login');
+    })->name('sign-in.store');
+    Route::get('/sign-up', function () {
+        return Inertia::render('Auth/Register');
+    })->name('sign-up');
+    Route::post('/sign-up', function () {
+        return Inertia::render('Auth/Register');
+    })->name('sign-up.store');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
