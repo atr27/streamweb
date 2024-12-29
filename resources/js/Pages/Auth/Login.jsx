@@ -57,7 +57,7 @@ export default function Login() {
                                 </div>
                             </div>
                             <div className="mt-[30px] grid space-y-[14px]">
-                                <Link href={route('auth.sign-in')}>
+                                <Link href={route('auth.dashboard')}>
                                     <Button type="button">
                                         <span className="text-base font-semibold">
                                             Start Watching
