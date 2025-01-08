@@ -20,7 +20,7 @@ export default function Sidebar() {
                         <div>
                             <div className="mb-4 text-sm text-gray-1">Menu</div>
                             <Link
-                                href="/auth/dashboard"
+                                href={route('auth.dashboard')}
                                 className={`side-link group flex items-center gap-[10px] rounded-lg px-6 py-2 transition-all ${
                                     isActive('/auth/dashboard')
                                         ? 'bg-softpur text-yellow-500'
@@ -125,9 +125,9 @@ export default function Sidebar() {
                                 Others
                             </div>
                             <Link
-                                href="pricing.html"
+                                href={route('auth.subscription')}
                                 className={`side-link group flex items-center gap-[10px] rounded-lg px-6 py-2 transition-all ${
-                                    isActive('pricing.html')
+                                    isActive('/auth/subscription')
                                         ? 'bg-softpur text-yellow-500'
                                         : 'hover:bg-softpur'
                                 }`}
@@ -137,7 +137,7 @@ export default function Sidebar() {
                                     height="24"
                                     viewBox="0 0 24 24"
                                     fill="currentColor"
-                                    className={`text-black ${isActive('pricing.html') ? 'text-yellow-500' : 'group-hover:text-yellow-500'}`}
+                                    className={`text-black ${isActive('/auth/subscription') ? 'text-yellow-500' : 'group-hover:text-yellow-500'}`}
                                     xmlns="http://www.w3.org/2000/svg"
                                 >
                                     <path

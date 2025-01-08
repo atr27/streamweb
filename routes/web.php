@@ -21,6 +21,9 @@ Route::prefix('auth')->name('auth.')->group(function () {
     route::get('/dashboard', function () {
         return Inertia::render('Auth/Dashboard');
     })->name('dashboard');
+    route::get('/subscription', function () {
+        return Inertia::render('Auth/Subscription');
+    })->name('subscription');
 });
 
 Route::middleware('auth')->group(function () {
