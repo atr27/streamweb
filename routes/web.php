@@ -24,6 +24,9 @@ Route::prefix('auth')->name('auth.')->group(function () {
     route::get('/subscription', function () {
         return Inertia::render('Auth/Subscription');
     })->name('subscription');
+    route::get('/movie/{slug}', function () {
+        return Inertia::render('Auth/Movie/Show');
+    })->name('movie.show');
 });
 
 Route::middleware('auth')->group(function () {

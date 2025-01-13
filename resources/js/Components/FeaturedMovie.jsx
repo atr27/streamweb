@@ -1,3 +1,4 @@
+import { Link } from "@inertiajs/react";
 import PropTypes from "prop-types";
 FeaturedMovie.propTypes = {
     slug: PropTypes.string.isRequired,
@@ -49,10 +50,10 @@ export default function FeaturedMovie({
                 />
             </div>
         </div>
-        <a
-            href={slug}
+        <Link
+            href={route('auth.movie.show', slug)}
             className="absolute inset-0 z-50"
-        ></a>
+        ></Link>
     </div>
     );
 }
