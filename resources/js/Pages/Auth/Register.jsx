@@ -1,120 +1,90 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
+import Label from '../../Components/InputLabel';
+import Button from '../../Components/PrimaryButton';
+import Input from '../../Components/TextInput';
 
 export default function Register() {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-    });
-
-    const submit = (e) => {
-        e.preventDefault();
-
-        post(route('register'), {
-            onFinish: () => reset('password', 'password_confirmation'),
-        });
-    };
-
     return (
-        <GuestLayout>
-            <Head title="Register" />
-
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
-
-                    <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.name} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel
-                        htmlFor="password_confirmation"
-                        value="Confirm Password"
-                    />
-
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) =>
-                            setData('password_confirmation', e.target.value)
-                        }
-                        required
-                    />
-
-                    <InputError
-                        message={errors.password_confirmation}
-                        className="mt-2"
+        <>
+            <Head title="Sign Up" />
+            <div className="max-w-screen mx-auto min-h-screen bg-black px-3 text-white md:px-10">
+                <div className="fixed top-[-50px] hidden lg:block">
+                    <img
+                        src="/images/signup-image.png"
+                        className="hidden laptopLg:block laptopLg:max-w-[450px] laptopXl:max-w-[640px]"
+                        alt=""
                     />
                 </div>
-
-                <div className="mt-4 flex items-center justify-end">
-                    <Link
-                        href={route('login')}
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >
-                        Already registered?
-                    </Link>
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
+                <div className="flex py-24 laptopLg:ml-[680px] laptopXl:ml-[870px]">
+                    <div>
+                        <h2 className="text-[35px] font-semibold text-white">
+                            StreamWeb
+                        </h2>
+                        <div className="my-[70px]">
+                            <div className="mb-3 text-[26px] font-semibold">
+                                Sign Up
+                            </div>
+                            <p className="text-base leading-7 text-[#767676]">
+                                Explore our new movies and get <br />
+                                the better insight for your life
+                            </p>
+                        </div>
+                        <form className="w-[370px]">
+                            <div className="flex flex-col gap-6">
+                                <div>
+                                    <Label
+                                        value="Full Name"
+                                        forInput="fullname"
+                                    />
+                                    <Input
+                                        type="text"
+                                        name="fullname"
+                                        placeholder="Your Full Name..."
+                                    />
+                                </div>
+                                <div>
+                                    <Label
+                                        value="Email Address"
+                                        forInput="email"
+                                    />
+                                    <Input
+                                        type="email"
+                                        name="email"
+                                        placeholder="Your Email Address..."
+                                    />
+                                </div>
+                                <div>
+                                    <Label
+                                        value="Password"
+                                        forInput="password"
+                                    />
+                                    <Input
+                                        type="password"
+                                        name="password"
+                                        placeholder="Your Password..."
+                                    />
+                                </div>
+                            </div>
+                            <div className="mt-[30px] grid space-y-[14px]">
+                                <Link href={route('auth.dashboard')}>
+                                    <Button variant="primary">
+                                        <span className="text-base font-semibold">
+                                            Sign Up
+                                        </span>
+                                    </Button>
+                                </Link>
+                                <Link href={route('auth.sign-in')}>
+                                    <Button variant="light-outline">
+                                        <span className="text-base font-semibold">
+                                            Sign In To My Account
+                                        </span>
+                                    </Button>
+                                </Link>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </form>
-        </GuestLayout>
+            </div>
+        </>
     );
 }

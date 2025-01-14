@@ -5,18 +5,29 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::redirect('/', '/auth/sign-in');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::prefix('auth')->name('auth.')->group(function () {
+    route::get('/sign-in', function () {
+        return Inertia::render('Auth/Login');
+    })->name('sign-in');
+    route::get('/sign-up', function () {
+        return Inertia::render('Auth/Register');
+    })->name('sign-up');
+    route::get('/dashboard', function () {
+        return Inertia::render('Auth/Dashboard');
+    })->name('dashboard');
+    route::get('/subscription', function () {
+        return Inertia::render('Auth/Subscription');
+    })->name('subscription');
+    route::get('/movie/{slug}', function () {
+        return Inertia::render('Auth/Movie/Show');
+    })->name('movie.show');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -24,4 +35,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
