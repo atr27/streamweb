@@ -36,6 +36,51 @@ export default function Show() {
                     </span>
                 </div>
             </section>
+            {/* Movie Description Section */}
+            <section className="movie-description bg-form-bg py-10 px-5 md:px-16">
+                <div className="max-w-6xl mx-auto">
+                    <h2 className="text-white text-2xl font-semibold mb-6">Movie Details</h2>
+                    <div className="flex flex-col md:flex-row gap-8">
+                        {/* Movie Poster */}
+                        <div className="w-full md:w-1/4">
+                            <img 
+                                src="/images/featured-1.png" 
+                                alt="Movie Poster" 
+                                className="w-full rounded-md shadow-lg"
+                            />
+                        </div>
+                        {/* Movie Information */}
+                        <div className="w-full md:w-3/4">
+                            <div className="space-y-4">
+                                <div>
+                                    <h3 className="text-white text-xl font-medium">Details Screen Part Final</h3>
+                                    <p className="text-gray-300 mt-2">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                                    </p>
+                                </div>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div>
+                                        <span className="text-gray-400 block">Genre</span>
+                                        <span className="text-white">Action</span>
+                                    </div>
+                                    <div>
+                                        <span className="text-gray-400 block">Duration</span>
+                                        <span className="text-white">2h 13m</span>
+                                    </div>
+                                    <div>
+                                        <span className="text-gray-400 block">Year</span>
+                                        <span className="text-white">2024</span>
+                                    </div>
+                                    <div>
+                                        <span className="text-gray-400 block">Rating</span>
+                                        <span className="text-white">4.5/5</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </>
     );
 }
