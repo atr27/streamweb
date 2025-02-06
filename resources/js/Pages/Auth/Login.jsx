@@ -9,14 +9,16 @@ export default function Login() {
             <Head title="Sign In" />
             <div className="max-w-screen mx-auto min-h-screen bg-black px-3 text-white md:px-10">
                 <div className="fixed top-[-50px] hidden lg:block">
-                    <img
+                        <img
                         src="/images/signup-image.png"
                         className="hidden laptopLg:block laptopLg:max-w-[450px] laptopXl:max-w-[640px]"
                         alt=""
-                    />
+                        />
                 </div>
-                <div className="flex py-24 laptopLg:ml-[680px] laptopXl:ml-[870px]">
-                    <div>
+
+                {/* Right side - Form */}
+                <div className="flex w-full items-center justify-center px-4 lg:w-[55%]">
+                    <div className="w-full max-w-[440px]">
                         <h2 className="text-[35px] font-semibold text-white">
                             StreamWeb
                         </h2>
@@ -59,10 +61,10 @@ export default function Login() {
                             <div className="mt-[30px] grid space-y-[14px]">
                                 <Link href={route('auth.dashboard')}>
                                     <Button type="button">
-                                        <span className="text-base font-semibold">
+                                    <span className="text-base font-semibold">
                                             Start Watching
-                                        </span>
-                                    </Button>
+                                    </span>
+                                </Button>
                                 </Link>
                                 <Link href={route('auth.sign-up')}>
                                     <Button
