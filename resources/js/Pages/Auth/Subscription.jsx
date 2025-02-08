@@ -4,7 +4,7 @@ import SubscriptionCard from '@/Components/SubscriptionCard';
 export default function Subscription() {
     return (
         <AuthenticatedLayout>
-            <div className="ml-[300px] px-[50px]">
+            <div className="mx-auto max-w-[1440px] px-[50px]">
                 <div className="flex flex-col items-center py-20">
                     <div className="mb-3 text-[26px] font-semibold text-black">
                         Pricing for Everyone

@@ -13,6 +13,7 @@ export default function Register() {
     });
 
     const [validationErrors, setValidationErrors] = useState({});
+    const [emailError, setEmailError] = useState('');
 
     useEffect(() => {
         return () => {
@@ -47,7 +48,8 @@ export default function Register() {
 
         // Validate password confirmation
         if (!data.password_confirmation) {
-            newErrors.password_confirmation = 'Password confirmation is required';
+            newErrors.password_confirmation =
+                'Password confirmation is required';
         } else if (data.password !== data.password_confirmation) {
             newErrors.password_confirmation = 'Passwords do not match';
         }
@@ -57,13 +59,17 @@ export default function Register() {
     };
 
     const onHandleChange = (event) => {
-        setData(event.target.name, event.target.value);
-        // Clear validation error when user starts typing
-        if (validationErrors[event.target.name] || errors[event.target.name]) {
-            setValidationErrors({
-                ...validationErrors,
-                [event.target.name]: '',
-            });
+        const { name, value } = event.target;
+        setData(name, value);
+
+        // Clear validation errors
+        setValidationErrors((prev) => ({
+            ...prev,
+            [name]: '',
+        }));
+
+        if (name === 'email') {
+            setEmailError('');
         }
     };
 
@@ -71,14 +77,44 @@ export default function Register() {
         e.preventDefault();
 
         if (validateForm()) {
-            post(route('register'));
+            post(route('register'), {
+                onSuccess: () => {
+                    // Akan di-redirect otomatis ke dashboard
+                    console.log('Registrasi berhasil');
+                },
+                onError: (errors) => {
+                    const newValidationErrors = {};
+
+                    if (errors.error) {
+                        // Menangani error umum dari server
+                        setEmailError(errors.error);
+                    }
+
+                    // Menangani error validasi
+                    Object.keys(errors).forEach((key) => {
+                        newValidationErrors[key] = errors[key];
+                    });
+
+                    setValidationErrors(newValidationErrors);
+                    if (errors.email) {
+                        setEmailError(errors.email);
+                    }
+
+                    // Reset password fields
+                    setData((data) => ({
+                        ...data,
+                        password: '',
+                        password_confirmation: '',
+                    }));
+                },
+            });
         }
     };
 
     return (
         <>
             <Head title="Sign Up" />
-            <div className="max-w-screen mx-auto min-h-screen bg-black px-3 text-white md:px-10">
+            <div className="min-h-screen bg-black px-3 text-white md:px-10">
                 <div className="fixed top-[-50px] hidden lg:block">
                     <img
                         src="/images/signup-image.png"
@@ -86,13 +122,13 @@ export default function Register() {
                         alt=""
                     />
                 </div>
-                <div className="flex py-20 laptopLg:ml-[680px] laptopXl:ml-[870px]">
-                    <div>
-                        <h2 className="text-[35px] font-semibold text-white">
+                <div className="flex min-h-screen items-center justify-center py-8 laptopLg:justify-end laptopLg:py-20 laptopLg:pr-20">
+                    <div className="w-full max-w-[370px]">
+                        <h2 className="text-[28px] font-semibold text-white md:text-[35px]">
                             StreamWeb
                         </h2>
-                        <div className="my-[70px]">
-                            <div className="mb-3 text-[26px] font-semibold">
+                        <div className="my-[40px] md:my-[70px]">
+                            <div className="mb-3 text-[22px] font-semibold md:text-[26px]">
                                 Sign Up
                             </div>
                             <p className="text-base leading-7 text-[#767676]">
@@ -100,13 +136,10 @@ export default function Register() {
                                 the better insight for your life
                             </p>
                         </div>
-                        <form className="w-[370px]" onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit}>
                             <div className="flex flex-col gap-6">
                                 <div>
-                                    <Label
-                                        value="Full Name"
-                                        forInput="name"
-                                    />
+                                    <Label value="Full Name" forInput="name" />
                                     <Input
                                         type="text"
                                         name="name"
@@ -114,8 +147,7 @@ export default function Register() {
                                         onChange={onHandleChange}
                                         placeholder="Your Full Name..."
                                     />
-                                    {(errors.name ||
-                                        validationErrors.name) && (
+                                    {(errors.name || validationErrors.name) && (
                                         <div className="mt-1 text-sm text-red-500">
                                             {errors.name ||
                                                 validationErrors.name}
@@ -133,7 +165,12 @@ export default function Register() {
                                         value={data.email}
                                         onChange={onHandleChange}
                                         placeholder="Your Email Address..."
-                                        className={errors.email || validationErrors.email ? 'input-error' : ''}
+                                        className={
+                                            errors.email ||
+                                            validationErrors.email
+                                                ? 'input-error'
+                                                : ''
+                                        }
                                     />
                                     {(errors.email ||
                                         validationErrors.email) && (
@@ -196,6 +233,7 @@ export default function Register() {
                                             : 'Sign Up'}
                                     </span>
                                 </Button>
+
                                 <Link href={route('auth.sign-in')}>
                                     <Button variant="light-outline">
                                         <span className="text-base font-semibold">

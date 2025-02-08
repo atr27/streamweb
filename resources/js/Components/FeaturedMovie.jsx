@@ -15,6 +15,9 @@ export default function FeaturedMovie({
     thumbnail,
     rating = 0,
 }) {
+    // Konversi rating ke number jika masih dalam bentuk string
+    const numericRating = typeof rating === 'string' ? parseFloat(rating) : rating;
+
     return (
         <div className="group absolute mr-[30px] overflow-hidden">
         {/* <!-- Movie Thumbnail --> */}
@@ -28,7 +31,7 @@ export default function FeaturedMovie({
             <div className="flex items-center gap-1 p-[30px]">
                 <img src="/icons/ic_star.svg" alt="" />
                 <span className="mt-1 text-sm font-medium text-white">
-                    {rating.toFixed(1)}/5.0
+                    {numericRating.toFixed(1)}/10.0
                 </span>
             </div>
         </div>

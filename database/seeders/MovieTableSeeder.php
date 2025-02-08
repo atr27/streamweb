@@ -34,7 +34,7 @@ class MovieTableSeeder extends Seeder
                 'rating' => 8.8,
                 'thumbnail' => 'https://posterspy.com/wp-content/uploads/2024/07/Barbie.jpg',
                 'video_url' => 'https://www.youtube.com/watch?v=pBk4NYhWNMM',
-                'is_featured' => true
+                'is_featured' => false
             ],
             [
                 'title' => 'Guardians of the Galaxy Vol. 3',
@@ -45,7 +45,7 @@ class MovieTableSeeder extends Seeder
                 'rating' => 8.9,
                 'thumbnail' => 'https://posterspy.com/wp-content/uploads/2023/05/guardians-of-the-galaxy-vol-3-poster.jpg',
                 'video_url' => 'https://www.youtube.com/watch?v=u3V5KDHRQvk',
-                'is_featured' => true
+                'is_featured' => false
             ],
             [
                 'title' => 'John Wick: Chapter 4',
@@ -56,7 +56,7 @@ class MovieTableSeeder extends Seeder
                 'rating' => 8.7,
                 'thumbnail' => 'https://posterspy.com/wp-content/uploads/2023/04/JohnWickCHPTR4_Poster02_Design.jpg',
                 'video_url' => 'https://www.youtube.com/watch?v=qEVUtrk8_B4',
-                'is_featured' => true
+                'is_featured' => false
             ],
             [
                 'title' => 'The Super Mario Bros. Movie',
@@ -67,7 +67,7 @@ class MovieTableSeeder extends Seeder
                 'rating' => 8.5,
                 'thumbnail' => 'https://posterspy.com/wp-content/uploads/2023/05/mariobrosmovie-poster-julienricojr-WEB.jpg',
                 'video_url' => 'https://www.youtube.com/watch?v=TnGl01FkMMo',
-                'is_featured' => true
+                'is_featured' => false
             ],
             [
                 'title' => 'Spider-Man: Across the Spider-Verse',
@@ -78,7 +78,7 @@ class MovieTableSeeder extends Seeder
                 'rating' => 9.0,
                 'thumbnail' => 'https://posterspy.com/wp-content/uploads/2023/04/SPIDERMAN-ACROSS-POSTEr.jpg',
                 'video_url' => 'https://www.youtube.com/watch?v=cqGjhVJWtEg',
-                'is_featured' => true
+                'is_featured' => false
             ],
             [
                 'title' => 'Mission: Impossible - Dead Reckoning Part One',
@@ -89,7 +89,7 @@ class MovieTableSeeder extends Seeder
                 'rating' => 8.8,
                 'thumbnail' => 'https://posterspy.com/wp-content/uploads/2023/07/MI7.jpg',
                 'video_url' => 'https://www.youtube.com/watch?v=avz06PDqDbM',
-                'is_featured' => true
+                'is_featured' => false
             ],
             [
                 'title' => 'Wonka',
@@ -111,7 +111,7 @@ class MovieTableSeeder extends Seeder
                 'rating' => 8.3,
                 'thumbnail' => 'https://posterspy.com/wp-content/uploads/2023/09/Aquaman-2.jpg',
                 'video_url' => 'https://www.youtube.com/watch?v=UGc5Tzz19UY',
-                'is_featured' => true
+                'is_featured' => false
             ],
             [
                 'title' => 'Napoleon',
@@ -122,7 +122,7 @@ class MovieTableSeeder extends Seeder
                 'rating' => 8.5,
                 'thumbnail' => 'https://posterspy.com/wp-content/uploads/2023/11/20B5D641-3CBE-4199-98D4-35ADBF047796.jpeg',
                 'video_url' => 'https://www.youtube.com/watch?v=OAZWXUkrjPc',
-                'is_featured' => true
+                'is_featured' => false
             ],
             [
                 'title' => 'Dune: Part Two',
@@ -133,7 +133,7 @@ class MovieTableSeeder extends Seeder
                 'rating' => 9.1,
                 'thumbnail' => 'https://posterspy.com/wp-content/uploads/2024/12/NerdDesigner_DunePartTwo.jpg',
                 'video_url' => 'https://www.youtube.com/watch?v=Way9Dexny3w',
-                'is_featured' => true
+                'is_featured' => false
             ],
             [
                 'title' => 'Madame Web',
@@ -155,7 +155,7 @@ class MovieTableSeeder extends Seeder
                 'rating' => 8.6,
                 'thumbnail' => 'https://posterspy.com/wp-content/uploads/2023/12/GXK.jpg',
                 'video_url' => 'https://www.youtube.com/watch?v=lV1OOlGwExM',
-                'is_featured' => true
+                'is_featured' => false
             ],
             [
                 'title' => 'Inside Out 2',
