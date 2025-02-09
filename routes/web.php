@@ -6,11 +6,12 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\User\DashboardController;
-
+use App\Http\Controllers\User\MovieController;
 Route::redirect('/', '/auth/sign-in');
 
 Route::middleware(['auth', 'role:user'])->prefix('dashboard')->name('user.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/movie/{movie:slug}', [MovieController::class, 'show'])->name('movie.show');
 });
 
 Route::prefix('auth')->name('auth.')->group(function () {
@@ -26,9 +27,6 @@ Route::prefix('auth')->name('auth.')->group(function () {
     route::get('/subscription', function () {
         return Inertia::render('Auth/Subscription');
     })->name('subscription');
-    route::get('/movie/{slug}', function () {
-        return Inertia::render('Auth/Movie/Show');
-    })->name('movie.show');
 });
 
 Route::middleware('auth')->group(function () {

@@ -5,7 +5,10 @@ FeaturedMovie.propTypes = {
     name: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     thumbnail: PropTypes.string.isRequired,
-    rating: PropTypes.number
+    rating: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
+    ])
 }
 
 export default function FeaturedMovie({
@@ -36,7 +39,7 @@ export default function FeaturedMovie({
             </div>
         </div>
         {/* <!-- bottom detail --> */}
-        <div className="absolute bottom-0 left-0 right-0 flex h-[100px] h-[130px] items-center justify-between rounded-bl-[28px] rounded-br-[28px] bg-gradient-to-t from-black px-7">
+        <div className="absolute bottom-0 left-0 right-0 flex h-[100px] items-center justify-between rounded-bl-[28px] rounded-br-[28px] bg-gradient-to-t from-black px-7">
             <div>
                 <div className="text-[22px] font-medium text-white">
                     {name}
@@ -54,7 +57,7 @@ export default function FeaturedMovie({
             </div>
         </div>
         <Link
-            href={route('auth.movie.show', slug)}
+            href={route('user.movie.show', slug)}
             className="absolute inset-0 z-50"
         ></Link>
     </div>
