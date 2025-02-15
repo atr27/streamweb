@@ -6,7 +6,7 @@ export default function AuthenticatedLayout({ children, auth }) {
         <>
             <div className="max-w-screen mx-auto hidden lg:block">
                 {/* START: Sidebar */}
-                <Sidebar />
+                <Sidebar auth={auth} />
                 {/* END: Sidebar */}
 
                 {/* START: Content */}

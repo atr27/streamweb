@@ -7,11 +7,15 @@ use Inertia\Inertia;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\MovieController;
-Route::redirect('/', '/auth/sign-in');
+use App\Http\Controllers\User\SubscriptionPlanController;
+
+Route::redirect('/', '/login');
 
 Route::middleware(['auth', 'role:user'])->prefix('dashboard')->name('user.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/movie/{movie:slug}', [MovieController::class, 'show'])->name('movie.show');
+    Route::get('/subscription-plan', [SubscriptionPlanController::class, 'index'])->name('subscription.index');
+    Route::post('/subscription-plan/{subscriptionPlan}/user-subscribe', [SubscriptionPlanController::class, 'userSubscribe'])->name('subscription.userSubscribe');
 });
 
 Route::prefix('auth')->name('auth.')->group(function () {

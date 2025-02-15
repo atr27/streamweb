@@ -3,8 +3,11 @@ import FeaturedMovie from '@/Components/FeaturedMovie';
 import AuthenticatedLayout from '@/Layouts/Authenticated/Index';
 import { Head } from '@inertiajs/react';
 import Flickity from 'react-flickity-component';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from 'react';
 
-export default function Dashboard({ auth, featuredMovies, movies }) {
+export default function Dashboard({ auth, featuredMovies, movies, flash }) {
     const flickityOptions = {
         cellAlign: 'left',
         contain: true,
@@ -15,6 +18,12 @@ export default function Dashboard({ auth, featuredMovies, movies }) {
         draggable: '>1',
     };
 
+    useEffect(() => {
+        if (flash?.message) {
+            toast.success(flash.message);
+        }
+    }, [flash?.message]);
+
     return (
         <AuthenticatedLayout auth={auth}>
             <Head>
@@ -24,6 +33,7 @@ export default function Dashboard({ auth, featuredMovies, movies }) {
                 />
                 <title>Dashboard</title>
             </Head>
+            <ToastContainer position="top-right" autoClose={3000} />
             <div>
                 <div className="mb-4 text-[22px] font-semibold text-black">
                     Featured Movies
