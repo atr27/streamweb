@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -45,5 +47,38 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Check if user has an active subscription
+     */
+    public function getIsActiveAttribute(): bool
+    {
+        $subscription = $this->lastActiveUserSubscription;
+        if (!$subscription) {
+            return false;
+        }
+
+        return Carbon::now()->lessThanOrEqualTo(Carbon::parse($subscription->expires_at));
+    }
+
+    /**
+     * Get the user's last active subscription
+     */
+    public function lastActiveUserSubscription(): HasOne
+    {
+        return $this->hasOne(UserSubscription::class)
+            ->where('status_payment', 'paid')
+            ->where('expires_at', '>', now())
+            ->latest()
+            ->with('subscriptionPlan'); // Always eager load the subscription plan
+    }
+
+    /**
+     * Get all user subscriptions
+     */
+    public function userSubscriptions()
+    {
+        return $this->hasMany(UserSubscription::class);
     }
 }

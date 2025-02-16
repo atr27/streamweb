@@ -1,100 +1,129 @@
-import Checkbox from '@/Components/Checkbox';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import React, { useEffect } from 'react';
+import Label from '@/Components/InputLabel';
+import Button from '@/Components/PrimaryButton';
+import Input from '@/Components/TextInput';
+import { Head, Link, useForm, router } from '@inertiajs/react';
 
-export default function Login({ status, canResetPassword }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+export default function Login({ auth }) {
+    const { data, setData, post, errors, processing, reset } = useForm({
         email: '',
         password: '',
-        remember: false,
     });
 
-    const submit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-
-        post(route('login'), {
-            onFinish: () => reset('password'),
-        });
+        post(route('login'));
     };
 
+    useEffect( () => {
+        return () => {
+            reset("password");
+        };
+    }, []);
+
     return (
-        <GuestLayout>
-            <Head title="Log in" />
-
-            {status && (
-                <div className="mb-4 text-sm font-medium text-green-600">
-                    {status}
-                </div>
-            )}
-
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        isFocused={true}
-                        onChange={(e) => setData('email', e.target.value)}
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4 block">
-                    <label className="flex items-center">
-                        <Checkbox
-                            name="remember"
-                            checked={data.remember}
-                            onChange={(e) =>
-                                setData('remember', e.target.checked)
-                            }
+        <>
+            <Head title="Sign In" />
+            <div className="h-screen bg-black text-white overflow-hidden">
+                <div className="flex h-screen">
+                    {/* Left side - Image */}
+                    <div className="hidden w-1/2 lg:block">
+                        <img
+                            src="/images/signup-image.png"
+                            className="h-full w-full object-cover"
+                            alt="Sign In Cover"
                         />
-                        <span className="ms-2 text-sm text-gray-600">
-                            Remember me
-                        </span>
-                    </label>
-                </div>
+                    </div>
 
-                <div className="mt-4 flex items-center justify-end">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                        >
-                            Forgot your password?
-                        </Link>
-                    )}
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Log in
-                    </PrimaryButton>
+                    {/* Right side - Form */}
+                    <div className="flex flex-1 items-center justify-center px-4">
+                        <div className="w-[440px]">
+                            <h2 className="text-[35px] font-semibold text-white pt-2">
+                                StreamWeb
+                            </h2>
+                            <div className="my-[70px]">
+                                <div className="mb-3 text-[26px] font-semibold">
+                                    Welcome Back
+                                </div>
+                                <p className="text-base leading-7 text-[#767676]">
+                                    Explore our new movies and get <br />
+                                    the better insight for your life
+                                </p>
+                            </div>
+                            <form onSubmit={handleSubmit} className="w-full">
+                                {auth?.error && (
+                                    <div className="mb-4 text-sm text-red-500">
+                                        {auth.error}
+                                    </div>
+                                )}
+                                <div className="flex flex-col gap-6">
+                                    <div>
+                                        <Label
+                                            value="Email Address"
+                                            forInput="email"
+                                        />
+                                        <Input
+                                            type="email"
+                                            name="email"
+                                            placeholder="Email Address"
+                                            value={data.email}
+                                            onChange={(e) => setData('email', e.target.value)}
+                                        />
+                                        {errors.email && (
+                                            <div className="mt-1 text-red-500 text-sm">
+                                                {errors.email}
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div>
+                                        <Label
+                                            value="Password"
+                                            forInput="password"
+                                        />
+                                        <Input
+                                            type="password"
+                                            name="password"
+                                            placeholder="Password"
+                                            value={data.password}
+                                            onChange={(e) => setData('password', e.target.value)}
+                                        />
+                                        {errors.password && (
+                                            <div className="mt-1 text-red-500 text-sm">
+                                                {errors.password}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="mt-[30px] flex flex-col gap-4">
+                                    <Button
+                                        type="submit"
+                                        className="w-full"
+                                        disabled={processing}
+                                    >
+                                        <span className="text-base font-semibold">
+                                            {processing ? 'Signing in...' : 'Sign In'}
+                                        </span>
+                                    </Button>
+                                    <Link
+                                        href={route('register')}
+                                        className="w-full text-center"
+                                    >
+                                        <Button
+                                            type="button"
+                                            variant="light-outline"
+                                            className="w-full"
+                                        >
+                                            <span className="text-base font-semibold">
+                                                Create New Account
+                                            </span>
+                                        </Button>
+                                    </Link>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </form>
-        </GuestLayout>
+            </div>
+        </>
     );
 }
