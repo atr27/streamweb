@@ -18,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+            'checkUserSubscription' => \App\Http\Middleware\CheckUserSubscription::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
