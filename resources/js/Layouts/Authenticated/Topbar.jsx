@@ -1,9 +1,11 @@
 import { useState, useRef } from "react";
 import { Link } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
 
-export default function Topbar({ name }) {
+export default function Topbar({ name, query }) {
     const [dropdownOpen, setDropdownOpen] = useState(true);
-    const dropdownTarget  = useRef();
+    const [searchQuery, setSearchQuery] = useState(query || '');
+    const dropdownTarget = useRef();
 
     const triggerDropdown = () => {
         if (dropdownOpen) {
@@ -14,12 +16,28 @@ export default function Topbar({ name }) {
         setDropdownOpen(!dropdownOpen);
     }
 
+    const handleSearch = (e) => {
+        const value = e.target.value;
+        setSearchQuery(value);
+        router.get(
+            route('user.browse', { query: value }),
+            {},
+            { 
+                preserveState: true,
+                preserveScroll: true,
+                only: ['movies', 'query']
+            }
+        );
+    };
+
     return (
         <div className="flex items-center justify-between cursor-pointer">
             <input
                 type="text"
+                value={searchQuery}
+                onChange={handleSearch}
                 className="top-search w-[280px] rounded-full bg-white bg-[length:24px_24px] bg-no-repeat px-5 py-3 pl-12 outline outline-2 outline-gray-2 focus:outline-primary"
-                placeholder="Search movie, cast, genre"
+                placeholder="Search movie, genre"
             />
             <div className="flex items-center gap-4">
                 <span className="text-sm font-medium text-black">
