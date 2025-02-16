@@ -3,8 +3,11 @@ import FeaturedMovie from '@/Components/FeaturedMovie';
 import AuthenticatedLayout from '@/Layouts/Authenticated/Index';
 import { Head } from '@inertiajs/react';
 import Flickity from 'react-flickity-component';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from 'react';
 
-export default function Dashboard() {
+export default function Dashboard({ auth, featuredMovies, movies, flash }) {
     const flickityOptions = {
         cellAlign: 'left',
         contain: true,
@@ -15,8 +18,14 @@ export default function Dashboard() {
         draggable: '>1',
     };
 
+    useEffect(() => {
+        if (flash?.message) {
+            toast.success(flash.message);
+        }
+    }, [flash?.message]);
+
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout auth={auth}>
             <Head>
                 <link
                     rel="stylesheet"
@@ -24,19 +33,20 @@ export default function Dashboard() {
                 />
                 <title>Dashboard</title>
             </Head>
+            <ToastContainer position="top-right" autoClose={3000} />
             <div>
                 <div className="mb-4 text-[22px] font-semibold text-black">
                     Featured Movies
                 </div>
                 <Flickity className="gap-[30px]" options={flickityOptions}>
-                    {[1, 2, 3, 4].map((i) => (
+                    {featuredMovies.map((movie) => (
                         <FeaturedMovie
-                            key={i}
-                            slug="the-batman-first"
-                            name={`The Batman ${i}`}
-                            category="Action"
-                            thumbnail="/images/featured-1.png"
-                            rating={i + 1}
+                            key={movie.id}
+                            slug={movie.slug}
+                            name={movie.title}
+                            category={movie.genre}
+                            thumbnail={movie.thumbnail}
+                            rating={movie.rating}
                         />
                     ))}
                 </Flickity>
@@ -46,13 +56,14 @@ export default function Dashboard() {
                     Browse
                 </div>
                 <Flickity className="gap-[30px]" options={flickityOptions}>
-                    {[1, 2, 3, 4, 5, 6].map((i) => (
-                        <CardMovie 
-                            key={i}
-                            slug="the-meong-golden"
-                            name={`The Meong Golden ${i}`}
-                            category="Comedy"
-                            thumbnail="/images/browse-1.png"
+                    {movies.map((movie) => (
+                        <CardMovie
+                            key={movie.id}
+                            slug={movie.slug}
+                            name={movie.title}
+                            category={movie.genre}
+                            thumbnail={movie.thumbnail}
+                            rating={movie.rating}
                         />
                     ))}
                 </Flickity>

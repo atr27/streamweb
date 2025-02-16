@@ -7,7 +7,7 @@ export default function InputLabel({
 }) {
     return (
         <label
-            forInput={forInput}
+            htmlFor={forInput}
             {...props}
             className={
                 `text-base block mb-2 ` +

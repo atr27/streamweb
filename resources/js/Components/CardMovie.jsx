@@ -35,7 +35,7 @@ export default function CardMovie({
             <div className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-[500px] transition duration-500 ease-in-out group-hover:-translate-y-1/2">
                 <img src="/icons/ic_play.svg" className="" width="50" alt="" />
             </div>
-            <Link href={route('auth.movie.show', slug)} className="absolute inset-0 z-50"></Link>
+            <Link href={route('user.movie.show', slug)} className="absolute inset-0 z-50"></Link>
         </div>
     );
 }

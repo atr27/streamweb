@@ -11,7 +11,7 @@ const Input = forwardRef(({
     autoComplete,
     required,
     isFocused,
-    handleChange,
+    onChange,
     placeholder,
     isError,
     ...props
@@ -41,7 +41,7 @@ const Input = forwardRef(({
             ref={localRef}
             autoComplete={autoComplete}
             required={required}
-            onChange={handleChange}
+            onChange={onChange}
             placeholder={placeholder}
         />
     );
@@ -58,7 +58,7 @@ Input.propTypes = {
     autoComplete: PropTypes.string,
     required: PropTypes.bool,
     isFocused: PropTypes.bool,
-    handleChange: PropTypes.func,
+    onChange: PropTypes.func,
     isError: PropTypes.bool
 };
 
