@@ -23,29 +23,7 @@ export const UserMenu = [
             />
         ),
         text: 'Your Favorites',
-        path: '#!'
-    },
-    {
-        icon: ({isActive}) => (
-            <FontAwesomeIcon 
-                icon={faDownload}
-                className={`${isActive ? 'text-yellow-500' : 'text-black group-hover:text-yellow-500'}`}
-                size="lg"
-            />
-        ),
-        text: 'Downloads',
-        path: '#!'
-    },
-    {
-        icon: ({isActive}) => (
-            <FontAwesomeIcon 
-                icon={faMessage}
-                className={`${isActive ? 'text-yellow-500' : 'text-black group-hover:text-yellow-500'}`}
-                size="lg"
-            />
-        ),
-        text: 'Messages',
-        path: '#!'
+        path: '/dashboard/favorites'
     },
 ];
 
@@ -64,24 +42,13 @@ export const OtherMenu = [
     {
         icon: ({isActive}) => (
             <FontAwesomeIcon 
-                icon={faChartLine}
-                className={`${isActive ? 'text-yellow-500' : 'text-black group-hover:text-yellow-500'}`}
-                size="lg"
-            />
-        ),
-        text: 'Analytics',
-        path: '#!'
-    },
-    {
-        icon: ({isActive}) => (
-            <FontAwesomeIcon 
                 icon={faUser}
                 className={`${isActive ? 'text-yellow-500' : 'text-black group-hover:text-yellow-500'}`}
                 size="lg"
             />
         ),
         text: 'Your Profile',
-        path: '#!'
+        path: '/dashboard/profile'
     },
     {
         icon: ({isActive}) => (

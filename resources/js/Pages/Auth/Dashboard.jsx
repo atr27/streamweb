@@ -16,6 +16,8 @@ export default function Dashboard({ auth, featuredMovies, movies, flash }) {
         pageDots: false,
         prevNextButtons: false,
         draggable: '>1',
+        freeScroll: true,
+        freeScrollFriction: 0.075
     };
 
     useEffect(() => {
@@ -55,16 +57,25 @@ export default function Dashboard({ auth, featuredMovies, movies, flash }) {
                 <div className="mb-4 text-[22px] font-semibold text-black">
                     Browse
                 </div>
-                <Flickity className="gap-[30px]" options={flickityOptions}>
+                <Flickity 
+                    className="gap-[30px] overflow-hidden" 
+                    options={{
+                        ...flickityOptions,
+                        groupCells: true,
+                        adaptiveHeight: true
+                    }}
+                    static
+                >
                     {movies.map((movie) => (
-                        <CardMovie
-                            key={movie.id}
-                            slug={movie.slug}
-                            name={movie.title}
-                            category={movie.genre}
-                            thumbnail={movie.thumbnail}
-                            rating={movie.rating}
-                        />
+                        <div key={movie.id} className="mr-5 w-[232px]">
+                            <CardMovie
+                                slug={movie.slug}
+                                name={movie.title}
+                                category={movie.genre}
+                                thumbnail={movie.thumbnail}
+                                rating={movie.rating}
+                            />
+                        </div>
                     ))}
                 </Flickity>
             </div>

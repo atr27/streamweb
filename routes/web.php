@@ -8,6 +8,8 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\MovieController;
 use App\Http\Controllers\User\SubscriptionPlanController;
+use App\Http\Controllers\FavoriteController;
+
 
 Route::redirect('/', '/login');
 
@@ -17,6 +19,12 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->name('user.')->gr
     Route::get('/browse', [MovieController::class, 'browse'])->name('browse');
     Route::get('/subscription-plan', [SubscriptionPlanController::class, 'index'])->name('subscription.index')->middleware('checkUserSubscription:false');
     Route::post('/subscription-plan/{subscriptionPlan}/user-subscribe', [SubscriptionPlanController::class, 'userSubscribe'])->name('subscription.userSubscribe')->middleware('checkUserSubscription:false');
+    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
+    Route::post('/favorites', [FavoriteController::class, 'store'])->name('favorites.store');
+    Route::get('/favorites/check', [FavoriteController::class, 'check'])->name('favorites.check');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/subscription/cancel/{userSubscription}', [ProfileController::class, 'cancelSubscription'])->name('subscription.cancel');
 });
 
 Route::prefix('auth')->name('auth.')->group(function () {
@@ -32,12 +40,6 @@ Route::prefix('auth')->name('auth.')->group(function () {
     route::get('/subscription', function () {
         return Inertia::render('Auth/Subscription');
     })->name('subscription');
-});
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');

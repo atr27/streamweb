@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('movies', function (Blueprint $table) {
-            $table->boolean('featured')->default(false)->after('title');
+            $table->boolean('is_favorite')->default(false)->after('title');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('movies', function (Blueprint $table) {
-            $table->dropColumn('featured');
+            $table->dropColumn('is_favorite');
         });
     }
 };

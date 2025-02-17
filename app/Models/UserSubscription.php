@@ -17,12 +17,14 @@ class UserSubscription extends Model
     protected $table = 'user_subscriptions';
     
     protected $fillable = [
-        'user_id', 
-        'subscription_plan_id', 
-        'price', 
-        'expires_at', 
-        'status_payment', 
-        'token'
+        'user_id',
+        'subscription_plan_id',
+        'price',
+        'status_payment',
+        'expires_at',
+        'token',
+        'created_at',
+        'updated_at'
     ];
 
     protected $casts = [

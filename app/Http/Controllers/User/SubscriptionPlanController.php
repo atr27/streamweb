@@ -38,4 +38,11 @@ class SubscriptionPlanController extends Controller
 
        return redirect()->route('user.dashboard')->with('success', 'Berlangganan berhasil!');
     }
+
+    public function cancel(UserSubscription $userSubscription)
+    {
+        $userSubscription->status_payment = 'unpaid';
+        $userSubscription->save();
+        return redirect()->route('user.dashboard')->with('success', 'Langganan berhasil dibatalkan!');
+    }
 }

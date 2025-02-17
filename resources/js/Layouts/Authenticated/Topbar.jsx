@@ -1,20 +1,9 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Link } from '@inertiajs/react';
 import { router } from '@inertiajs/react';
 
 export default function Topbar({ name, query }) {
-    const [dropdownOpen, setDropdownOpen] = useState(true);
     const [searchQuery, setSearchQuery] = useState(query || '');
-    const dropdownTarget = useRef();
-
-    const triggerDropdown = () => {
-        if (dropdownOpen) {
-            dropdownTarget.current.classList.remove('hidden');
-        } else {
-            dropdownTarget.current.classList.add('hidden');
-        }
-        setDropdownOpen(!dropdownOpen);
-    }
 
     const handleSearch = (e) => {
         const value = e.target.value;
@@ -43,44 +32,18 @@ export default function Topbar({ name, query }) {
                 <span className="text-sm font-medium text-black">
                     Welcome, {name}
                 </span>
-                <div className="collapsible-dropdown relative flex flex-col gap-2">
-                    <div
-                        href="#!"
-                        className="dropdown-button w-[60px] rounded-full p-[5px] outline outline-2 outline-gray-2"
-                        onClick={triggerDropdown}
+                <Link
+                    href={route('user.profile')}
+                    className="w-[40px] rounded-full p-[5px]"
+                >
+                    <svg 
+                        className="w-full h-full text-white rounded-full bg-yellow-500"
+                        fill="currentColor" 
+                        viewBox="0 0 24 24"
                     >
-                        <img
-                            src="/images/avatar.png"
-                            className="w-full rounded-full object-cover"
-                            alt=""
-                        />
-                    </div>
-                    <div
-                        className="absolute right-0 top-[70px] z-[999] flex hidden min-w-[180px] flex-col gap-1 overflow-hidden rounded-2xl bg-white p-1 shadow-md"
-                        ref={dropdownTarget}
-                    >
-                        <a
-                            href="#!"
-                            className="p-4 transition-all hover:bg-sky-100"
-                        >
-                            Dashboard
-                        </a>
-                        <a
-                            href="#!"
-                            className="p-4 transition-all hover:bg-sky-100"
-                        >
-                            Settings
-                        </a>
-                        <Link
-                            href={route('logout')}
-                            method="post" 
-                            as="button"
-                            className="p-4 transition-all hover:bg-sky-100 w-full text-left"
-                        >
-                            Sign Out
-                        </Link>
-                    </div>
-                </div>
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                    </svg>
+                </Link>
             </div>
             <style jsx="true">
                 {`

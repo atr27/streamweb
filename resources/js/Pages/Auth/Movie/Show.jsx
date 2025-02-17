@@ -1,7 +1,63 @@
 import ReactPlayer from "react-player";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Show({ movie }) {
+    const [isLoading, setIsLoading] = useState(false);
+    const [isFavorited, setIsFavorited] = useState(false);
+
+    useEffect(() => {
+        // Cek status favorit saat komponen dimuat
+        checkFavoriteStatus();
+    }, []);
+
+    const showNotification = (message, type = 'success') => {
+        toast[type](message, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+    };
+
+    const checkFavoriteStatus = () => {
+        axios.get(route('user.favorites.check'), {
+            params: {
+                movie_id: movie.id
+            }
+        })
+        .then(response => {
+            setIsFavorited(response.data.is_favorited);
+        })
+        .catch(error => {
+            console.error('Error checking favorite status:', error);
+            showNotification('Gagal memeriksa status favorit', 'error');
+        });
+    };
+
+    const handleFavoriteToggle = (movieId) => {
+        setIsLoading(true);
+        axios.post(route('user.favorites.store'), {
+            movie_id: movieId
+        })
+        .then(response => {
+            setIsLoading(false);
+            setIsFavorited(response.data.is_favorited);
+            showNotification(response.data.message);
+        })
+        .catch(error => {
+            setIsLoading(false);
+            showNotification(error.response?.data?.message || 'Terjadi kesalahan', 'error');
+        });
+    };
+
     return (
         <>
             <section
@@ -52,12 +108,39 @@ export default function Show({ movie }) {
                         {/* Movie Information */}
                         <div className="w-full md:w-3/4">
                             <div className="space-y-4">
-                                <div>
+                                <div className="flex justify-between items-start">
                                     <h3 className="text-white text-xl font-medium">{movie.title}</h3>
-                                    <p className="text-gray-300 mt-2">
-                                        {movie.description}
-                                    </p>
+                                    <button 
+                                        className={`px-4 py-2 ${isFavorited ? 'bg-red-500 hover:bg-red-400' : 'bg-yellow-500 hover:bg-yellow-400'} text-white rounded-md flex items-center gap-2 transition-all ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                        onClick={() => handleFavoriteToggle(movie.id)}
+                                        disabled={isLoading}
+                                    >
+                                        {isLoading ? (
+                                            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                        ) : (
+                                            <svg 
+                                                xmlns="http://www.w3.org/2000/svg" 
+                                                className="h-5 w-5" 
+                                                viewBox="0 0 20 20" 
+                                                fill={isFavorited ? 'currentColor' : 'none'}
+                                                stroke="currentColor"
+                                            >
+                                                <path 
+                                                    fillRule="evenodd" 
+                                                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" 
+                                                    clipRule="evenodd" 
+                                                />
+                                            </svg>
+                                        )}
+                                        {isLoading ? 'Memproses...' : (isFavorited ? 'Hapus dari Favorit' : 'Tambah ke Favorit')}
+                                    </button>
                                 </div>
+                                <p className="text-gray-300 mt-2">
+                                    {movie.description}
+                                </p>
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                     <div>
                                         <span className="text-gray-400 block">Genre</span>
@@ -81,6 +164,18 @@ export default function Show({ movie }) {
                     </div>
                 </div>
             </section>
+            <ToastContainer
+                position="top-right"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
         </>
     );
 }
