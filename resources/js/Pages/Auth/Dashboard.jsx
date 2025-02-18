@@ -6,6 +6,7 @@ import Flickity from 'react-flickity-component';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect } from 'react';
+import "flickity/css/flickity.css";
 
 export default function Dashboard({ auth, featuredMovies, movies, flash }) {
     const flickityOptions = {

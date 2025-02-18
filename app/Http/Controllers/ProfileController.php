@@ -13,8 +13,8 @@ use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Http\Traits\WithAuthData;
-use App\Models\UserSubscription;
-
+use App\Models\User;
+use Illuminate\Support\Facades\Log;
 class ProfileController extends Controller
 {
     use WithAuthData;
@@ -22,12 +22,6 @@ class ProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $user->load(['userSubscriptions' => function ($query) {
-            $query->with('subscriptionPlan')
-                  ->where('status_payment', 'paid')
-                  ->where('expires_at', '>', now())
-                  ->latest();
-        }]);
         
         $authData = $this->getAuthData();
         
@@ -66,12 +60,15 @@ class ProfileController extends Controller
             'new_password' => ['nullable', 'confirmed', Password::defaults()],
         ]);
 
-        $user = Auth::user();
+        $user = User::find(Auth::id());
         $user->name = $validated['name'];
         
         if ($request->filled('new_password')) {
             $user->password = Hash::make($validated['new_password']);
         }
+
+        Log::info('User instance:', [$user]);
+        Log::info('User class:', [get_class($user)]);
 
         $user->save();
 

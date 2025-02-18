@@ -81,4 +81,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserSubscription::class);
     }
+
+    public function getLastActiveUserSubscriptionAttribute()
+    {
+        return $this->userSubscriptions()
+            ->with('subscriptionPlan')
+            ->where('status_payment', 'paid')
+            ->where('expires_at', '>', now())
+            ->latest()
+            ->first();
+    }
 }

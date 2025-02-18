@@ -24,7 +24,7 @@ trait WithAuthData
             ];
         }
 
-        // Get user's subscription with subscription plan
+        // Dapatkan langganan pengguna dengan rencana langganan
         $activePlan = UserSubscription::with('subscriptionPlan')
             ->where('user_id', $user->id)
             ->where('status_payment', 'paid')
@@ -44,16 +44,16 @@ trait WithAuthData
             ];
         }
 
-        // Calculate total active days from creation to expiration
+        // Hitung total hari aktif dari pembuatan hingga kedaluwarsa
         $startDate = Carbon::parse($activePlan->created_at);
         $endDate = Carbon::parse($activePlan->expires_at);
         $activeDay = (int) $startDate->diffInDays($endDate);
 
-        // Calculate remaining days from now to expiration
+        // Hitung sisa hari dari sekarang hingga kedaluwarsa
         $now = Carbon::now();
         $remainingActiveDay = (int) $now->diffInDays($endDate);
 
-        // Ensure we don't exceed the total days
+        // Pastikan tidak melebihi total hari
         $remainingActiveDay = min($remainingActiveDay, $activeDay);
 
         return [

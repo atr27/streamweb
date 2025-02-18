@@ -3,29 +3,19 @@ import Topbar from "@/Layouts/Authenticated/Topbar";
 
 export default function AuthenticatedLayout({ children, auth }) {
     return (
-        <>
-            <div className="max-w-screen mx-auto hidden lg:block">
-                {/* START: Sidebar */}
+        <div className="relative min-h-screen overflow-x-hidden">
+            <div className="hidden lg:block">
                 <Sidebar auth={auth} />
-                {/* END: Sidebar */}
+            </div>
 
-                {/* START: Content */}
-                <div className="ml-[300px] px-[50px]">
-                    <div className="flex flex-col gap-[50px] py-10">
-                        {/* START: Top Bar */}
-                        <Topbar name={auth.user.name} />
-                        {/* END: Top Bar */}
+            <div className="w-full lg:pl-[300px]">
+                <div className="max-w-screen-2xl mx-auto px-4 lg:px-8">
+                    <div className="flex flex-col gap-[30px] lg:gap-[50px] py-6 lg:py-10">
+                        <Topbar name={auth.user.name} auth={auth} />
                         <main>{children}</main>
                     </div>
                 </div>
-                {/* END: Content */}
             </div>
-
-            <div className="mx-auto flex h-screen w-full bg-black px-4 lg:hidden">
-                <div className="my-auto text-center text-2xl font-medium leading-snug text-white">
-                    Sorry, this page only supported on 1024px screen or above
-                </div>
-            </div>
-        </>
+        </div>
     );
 }
