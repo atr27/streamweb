@@ -114,7 +114,7 @@ export default function Register() {
     return (
         <>
             <Head title="Sign Up" />
-            <div className="min-h-screen bg-black px-3 text-white md:px-10">
+            <div className="min-h-screen bg-black px-3 py-8 text-white md:px-10">
                 <div className="fixed top-[-50px] hidden lg:block">
                     <img
                         src="/images/signup-image.png"
@@ -122,13 +122,13 @@ export default function Register() {
                         alt=""
                     />
                 </div>
-                <div className="flex min-h-screen items-center justify-center py-8 laptopLg:justify-end laptopLg:py-20 laptopLg:pr-20">
+                <div className="mx-auto flex min-h-screen items-center justify-center laptopLg:justify-end laptopLg:pr-20">
                     <div className="w-full max-w-[370px]">
-                        <h2 className="text-[28px] font-semibold text-white md:text-[35px]">
+                        <h2 className="text-[26px] font-semibold text-white md:text-[35px]">
                             StreamWeb
                         </h2>
-                        <div className="my-[40px] md:my-[70px]">
-                            <div className="mb-3 text-[22px] font-semibold md:text-[26px]">
+                        <div className="my-[30px] md:my-[70px]">
+                            <div className="mb-3 text-[20px] font-semibold md:text-[26px]">
                                 Sign Up
                             </div>
                             <p className="text-base leading-7 text-[#767676]">
