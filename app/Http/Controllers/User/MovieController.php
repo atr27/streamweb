@@ -29,7 +29,6 @@ class MovieController extends Controller
                          ->orWhereRaw('LOWER(genre) LIKE ?', [$searchTerm]);
             });
         })
-        ->orderBy('featured', 'DESC')
         ->orderBy('created_at', 'DESC');
 
         // Debug query sebelum dieksekusi

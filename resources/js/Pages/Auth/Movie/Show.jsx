@@ -64,54 +64,74 @@ export default function Show({ movie }) {
                 className="watching-page relative mx-auto w-screen h-screen font-poppins bg-form-bg overflow-hidden"
                 id="stream"
             >
-                <div className="h-full pt-[90px] overflow-hidden">
-                    <ReactPlayer
-                        url={movie.video_url}
-                        controls
-                        width="100%"
-                        height="calc(100vh - 100px)"
-                        className="react-player"
-                    />
-                </div>
-
-                {/* Back to dashboard button */}
-                <div className="absolute left-5 top-5 z-20">
+                {/* Back to dashboard button - pindahkan ke atas video untuk mobile */}
+                <div className="absolute left-3 top-3 z-20 md:left-5 md:top-5">
                     <Link href={route("user.dashboard")}>
                         <img
                             src="https://cdn-icons-png.flaticon.com/512/2223/2223615.png"
-                            className="btn-back w-[46px] transition-all bg-yellow-500 hover:bg-yellow-400 rounded-full p-3 shadow-lg"
+                            className="btn-back w-[35px] md:w-[46px] transition-all bg-yellow-500 hover:bg-yellow-400 rounded-full p-2 md:p-3 shadow-lg"
                             alt="Back to dashboard"
                         />
                     </Link>
                 </div>
 
-                {/* Video Title */}
-                <div className="title-video absolute left-1/2 top-7 max-w-[310px] -translate-x-1/2 text-center md:max-w-[620px]">
-                    <span className="select-none text-2xl font-medium text-white drop-shadow-md transition-all">
+                {/* Video Title - sesuaikan ukuran dan posisi untuk mobile */}
+                <div className="title-video absolute left-1/2 top-3 md:top-7 max-w-[280px] md:max-w-[620px] -translate-x-1/2 text-center z-20">
+                    <span className="select-none text-lg md:text-2xl font-medium text-white drop-shadow-md transition-all">
                         {movie.title}
                     </span>
                 </div>
+
+                {/* Video Player Container */}
+                <div className="h-full pt-[60px] md:pt-[90px] overflow-hidden">
+                    <ReactPlayer
+                        url={movie.video_url}
+                        controls
+                        width="100%"
+                        height="100%"
+                        style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)'
+                        }}
+                        className="react-player"
+                        playsinline // Penting untuk iOS
+                        config={{
+                            file: {
+                                attributes: {
+                                    controlsList: 'nodownload', // Mencegah download
+                                    disablePictureInPicture: true // Menonaktifkan PiP
+                                }
+                            }
+                        }}
+                    />
+                </div>
             </section>
             {/* Movie Description Section */}
-            <section className="movie-description bg-form-bg py-10 px-5 md:px-16">
+            <section className="movie-description bg-form-bg py-10 px-4 md:px-16">
                 <div className="max-w-6xl mx-auto">
-                    <h2 className="text-white text-2xl font-semibold mb-6">Movie Details</h2>
-                    <div className="flex flex-col md:flex-row gap-8">
+                    <h2 className="text-white text-xl md:text-2xl font-semibold mb-6">Movie Details</h2>
+                    <div className="flex flex-col md:flex-row gap-6 md:gap-8">
                         {/* Movie Poster */}
-                        <div className="w-full md:w-1/4">
+                        <div className="w-full md:w-1/4 flex justify-center md:justify-start">
                             <img 
                                 src={movie.thumbnail} 
                                 alt="Movie Poster" 
-                                className="w-full max-w-[200px] rounded-md shadow-lg"
+                                className="w-full h-auto max-w-[200px] rounded-md shadow-lg"
                             />
                         </div>
                         {/* Movie Information */}
                         <div className="w-full md:w-3/4">
                             <div className="space-y-4">
-                                <div className="flex justify-between items-start">
-                                    <h3 className="text-white text-xl font-medium">{movie.title}</h3>
+                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+                                    <h3 className="text-white text-lg md:text-xl font-medium">{movie.title}</h3>
                                     <button 
-                                        className={`px-4 py-2 ${isFavorited ? 'bg-red-500 hover:bg-red-400' : 'bg-yellow-500 hover:bg-yellow-400'} text-white rounded-md flex items-center gap-2 transition-all ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                        className={`w-full sm:w-auto px-4 py-2 ${
+                                            isFavorited ? 'bg-red-500 hover:bg-red-400' : 'bg-yellow-500 hover:bg-yellow-400'
+                                        } text-white rounded-md flex items-center justify-center sm:justify-start gap-2 transition-all ${
+                                            isLoading ? 'opacity-50 cursor-not-allowed' : ''
+                                        }`}
                                         onClick={() => handleFavoriteToggle(movie.id)}
                                         disabled={isLoading}
                                     >
@@ -138,10 +158,10 @@ export default function Show({ movie }) {
                                         {isLoading ? 'Memproses...' : (isFavorited ? 'Hapus dari Favorit' : 'Tambah ke Favorit')}
                                     </button>
                                 </div>
-                                <p className="text-gray-300 mt-2">
+                                <p className="text-gray-300 text-sm md:text-base mt-2">
                                     {movie.description}
                                 </p>
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div className="grid grid-cols-2 gap-4 text-sm md:text-base">
                                     <div>
                                         <span className="text-gray-400 block">Genre</span>
                                         <span className="text-white">{movie.genre}</span>

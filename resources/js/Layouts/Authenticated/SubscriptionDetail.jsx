@@ -12,7 +12,7 @@ export default function SubscriptionDetail({ auth }) {
     const [subscriptionData, setSubscriptionData] = useState(null);
     const [error, setError] = useState(null);
     
-    // Initialize subscription data from auth prop
+    // Inisialisasi data langganan dari prop auth
     useEffect(() => {
         if (auth?.activePlan) {
             setSubscriptionData(auth.activePlan);
@@ -42,7 +42,7 @@ export default function SubscriptionDetail({ auth }) {
             }
         };
 
-        // Calculate time left immediately and then every second
+        // Hitung sisa waktu segera dan kemudian setiap detik
         if (subscriptionData) {
             calculateTimeLeft();
             const timer = setInterval(calculateTimeLeft, 1000);

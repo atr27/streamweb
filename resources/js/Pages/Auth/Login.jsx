@@ -25,9 +25,18 @@ export default function Login({ auth }) {
         <>
             <Head title="Sign In" />
             <div className="h-screen bg-black text-white overflow-hidden">
-                <div className="flex h-screen">
-                    {/* Left side - Image */}
-                    <div className="hidden w-1/2 lg:block">
+                <div className="flex h-screen flex-col lg:flex-row relative">
+                    {/* Background image for mobile */}
+                    <div className="absolute inset-0 w-full h-full lg:hidden">
+                        <img
+                            src="/images/signup-image.png"
+                            className="h-full w-full object-cover opacity-30"
+                            alt="Sign In Cover Mobile"
+                        />
+                    </div>
+
+                    {/* Left side - Image (desktop only) */}
+                    <div className="hidden w-full lg:block lg:w-1/2">
                         <img
                             src="/images/signup-image.png"
                             className="h-full w-full object-cover"
@@ -36,13 +45,13 @@ export default function Login({ auth }) {
                     </div>
 
                     {/* Right side - Form */}
-                    <div className="flex flex-1 items-center justify-center px-4">
-                        <div className="w-[440px]">
-                            <h2 className="text-[35px] font-semibold text-white pt-2">
+                    <div className="flex flex-1 items-center justify-center p-8 lg:px-4 relative z-10">
+                        <div className="w-full max-w-[440px]">
+                            <h2 className="text-[28px] lg:text-[35px] font-semibold text-white pt-2">
                                 StreamWeb
                             </h2>
-                            <div className="my-[70px]">
-                                <div className="mb-3 text-[26px] font-semibold">
+                            <div className="my-[40px] lg:my-[70px]">
+                                <div className="mb-3 text-[22px] lg:text-[26px] font-semibold">
                                     Welcome Back
                                 </div>
                                 <p className="text-base leading-7 text-[#767676]">

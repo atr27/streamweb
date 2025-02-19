@@ -11,9 +11,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 export default function Sidebar({ auth, onClose = null, isMobile = false }) {
-    console.log('Auth data:', auth); // Tambahkan log untuk debugging
-
-    // Tambahkan default value dan pengecekan
     const defaultPlan = {
         name: 'Free Plan',
         activeDay: 0,
@@ -21,16 +18,12 @@ export default function Sidebar({ auth, onClose = null, isMobile = false }) {
         isPremium: false,
     };
 
-    // Gunakan nullish coalescing untuk menghindari error saat auth undefined
     const activePlan = auth?.activePlan ?? defaultPlan;
-
-    // Get current URL from Inertia
-    const { url } = usePage();
 
     const navigation = [
         { 
             name: 'Dashboard', 
-            href: route('user.dashboard'), 
+            href: route('user.dashboard'),
             icon: <FontAwesomeIcon icon={faHome} className="w-5 h-5" />
         },
         {
@@ -45,7 +38,7 @@ export default function Sidebar({ auth, onClose = null, isMobile = false }) {
         },
         { 
             name: 'Profile', 
-            href: route('user.profile'), 
+            href: route('user.profile'),
             icon: <FontAwesomeIcon icon={faUser} className="w-5 h-5" />
         },
         {
@@ -70,15 +63,6 @@ export default function Sidebar({ auth, onClose = null, isMobile = false }) {
                             StreamWeb
                         </h1>
                     </Link>
-                    {/* Close button untuk mobile */}
-                    {onClose && (
-                        <button 
-                            className="lg:hidden text-2xl"
-                            onClick={onClose}
-                        >
-                            ×
-                        </button>
-                    )}
                 </div>
 
                 {/* Navigation */}
